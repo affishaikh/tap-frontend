@@ -1,7 +1,7 @@
 import React from "react";
-import './Validation.css'
+import './OtpValidation.css'
 
-class Validation extends React.Component {
+class OtpValidation extends React.Component {
     constructor(props) {
         super(props);
 
@@ -28,14 +28,14 @@ class Validation extends React.Component {
             },
             body: JSON.stringify({ otp: +this.state.otp, email })
         }).then(response => {
-            return response.json()
-        })
+            this.props.onOtpValidationComplete(response.ok)
+        }).catch(console.error)
     }
 
     render() {
         return (
             <div className="validation-component">
-                <h1>Enter OTP!</h1>
+                <h1>OTP has been sent to your Email</h1>
                 <input className="text"
                        name="otp"
                        type="text"
@@ -51,4 +51,4 @@ class Validation extends React.Component {
     }
 }
 
-export default Validation
+export default OtpValidation

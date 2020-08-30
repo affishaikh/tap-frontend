@@ -1,21 +1,31 @@
 import React from 'react';
 import Registration from "./components/registration/Registration";
 import './App.css';
-import Validation from "./components/validation/Validation";
+import OtpValidation from "./components/OtpValidation/OtpValidation";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isRegistrationComplete: false
+            isRegistrationComplete: false,
+            isOtpValidationComplete: false,
+            isValidUser: false
         }
 
         this.onRegistrationComplete = this.onRegistrationComplete.bind(this)
+        this.onOtpValidationComplete = this.onOtpValidationComplete.bind(this)
     }
 
     onRegistrationComplete() {
         this.setState({isRegistrationComplete: true})
+    }
+
+    onOtpValidationComplete(isValidUser) {
+        this.setState({
+            isOtpValidationComplete: true,
+            isValidUser: isValidUser
+        })
     }
 
     render() {
@@ -28,12 +38,24 @@ class App extends React.Component {
             );
         }
 
-        if (this.state.isRegistrationComplete) {
+        if (this.state.isRegistrationComplete && !this.state.isOtpValidationComplete) {
             return (
                 <div className="App">
-                    <Validation/>
+                    <OtpValidation onOtpValidationComplete={this.onOtpValidationComplete.bind(this)}/>
                 </div>
             );
+        }
+
+        if (this.state.isValidUser) {
+            return (<div className="App">
+                <h1>Your Registration is complete!!!</h1>
+            </div>)
+        }
+
+        if (!this.state.isValidUser) {
+            return (<div className="App">
+                <h1>You have entered a wrong OTP</h1>
+            </div>)
         }
     }
 }
