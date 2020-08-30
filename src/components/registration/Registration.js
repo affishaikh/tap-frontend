@@ -1,7 +1,7 @@
 import React from 'react'
 import './Registration.css'
 
-class RegistrationComponent extends React.Component {
+class Registration extends React.Component {
     constructor(props) {
         super(props);
 
@@ -33,7 +33,8 @@ class RegistrationComponent extends React.Component {
             },
             body: JSON.stringify({ ...this.state })
         }).then(response => {
-            console.log("Response is " + response.json())
+            localStorage.setItem("email", this.state.email)
+            this.props.onRegistrationComplete()
         });
     }
 
@@ -54,4 +55,4 @@ class RegistrationComponent extends React.Component {
     }
 }
 
-export default RegistrationComponent
+export default Registration
